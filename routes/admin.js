@@ -9,9 +9,12 @@ const cloudinary = require('../config/cloudinary');
 // Cloudinary Multer setup
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'portfolio',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
+  params: async (req, file) => {
+    return {
+      folder: 'portfolio',
+      allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+      resource_type: 'auto'
+    };
   }
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
@@ -84,7 +87,11 @@ router.get('/projects/new', isAdmin, async (req, res) => {
 router.post('/projects', isAdmin, upload.single('image'), async (req, res) => {
   try {
     const data = req.body;
-    if (req.file) data.image = req.file.secure_url;
+    if (req.file) {
+      // Log what we got from Cloudinary
+      console.log('📸 Uploaded file:', req.file);
+      data.image = req.file.secure_url || req.file.url || req.file.path;
+    }
     if (typeof data.technologies === 'string') data.technologies = data.technologies.split(',').map(t => t.trim()).filter(Boolean);
     data.featured = data.featured === 'on';
     await Project.create(data);
@@ -104,7 +111,10 @@ router.get('/projects/:id/edit', isAdmin, async (req, res) => {
 router.put('/projects/:id', isAdmin, upload.single('image'), async (req, res) => {
   try {
     const data = req.body;
-    if (req.file) data.image = req.file.secure_url;
+    if (req.file) {
+      console.log('📸 Uploaded file (update):', req.file);
+      data.image = req.file.secure_url || req.file.url || req.file.path;
+    }
     if (typeof data.technologies === 'string') data.technologies = data.technologies.split(',').map(t => t.trim()).filter(Boolean);
     data.featured = data.featured === 'on';
     await Project.findByIdAndUpdate(req.params.id, data);
@@ -202,7 +212,10 @@ router.get('/testimonials', isAdmin, async (req, res) => {
 router.post('/testimonials', isAdmin, upload.single('avatar'), async (req, res) => {
   try {
     const data = req.body;
-    if (req.file) data.avatar = req.file.secure_url;
+    if (req.file) {
+      console.log('📸 Uploaded avatar:', req.file);
+      data.avatar = req.file.secure_url || req.file.url || req.file.path;
+    }
     data.featured = data.featured === 'on';
     await Testimonial.create(data);
     req.flash('success', 'Testimonial added!');
@@ -290,7 +303,10 @@ router.get('/blog/new', isAdmin, async (req, res) => {
 router.post('/blog', isAdmin, upload.single('image'), async (req, res) => {
   try {
     const data = req.body;
-    if (req.file) data.image = req.file.secure_url;
+    if (req.file) {
+      console.log('📸 Uploaded blog image:', req.file);
+      data.image = req.file.secure_url || req.file.url || req.file.path;
+    }
     if (typeof data.tags === 'string') data.tags = data.tags.split(',').map(t => t.trim()).filter(Boolean);
     data.slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now();
     await Blog.create(data);
