@@ -14,7 +14,7 @@ app.use((req, res, next) => {
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://upload.cloudinary.com",
+      "script-src 'self' 'unsafe-inline' blob: https://cdnjs.cloudflare.com https://upload.cloudinary.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com https://cdnjs.cloudflare.com",
       "font-src 'self' data: https://fonts.gstatic.com https://api.fontshare.com https://cdnjs.cloudflare.com",
       "img-src 'self' data: blob: https: https://res.cloudinary.com",

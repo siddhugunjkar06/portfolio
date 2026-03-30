@@ -8,7 +8,7 @@ module.exports = async function seedData() {
       await Admin.create({
         email: process.env.ADMIN_EMAIL || 'admin@portfolio.com',
         password: process.env.ADMIN_PASSWORD || 'Admin@123456',
-        name: 'Alex Morgan'
+        name: 'Siddheshwar Gunjkar'
       });
       console.log('✅ Admin user seeded');
     }
@@ -17,7 +17,7 @@ module.exports = async function seedData() {
     const settingsCount = await Settings.countDocuments();
     if (settingsCount === 0) {
       await Settings.insertMany([
-        { key: 'siteName', value: 'Alex Morgan Dev' },
+        { key: 'siteName', value: 'S G Devloper' },
         { key: 'tagline', value: 'Crafting Digital Experiences That Matter' },
         { key: 'email', value: 'hello@alexmorgandev.com' },
         { key: 'phone', value: '+1 (555) 123-4567' },
