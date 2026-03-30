@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — <%= settings.siteName || 'DevPortfolio' %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<%- include('partials/navbar', { settings, page: 'projects' }) %>
+
+<section class="page-header">
+  <div class="container">
+    <div class="section-eyebrow">Portfolio</div>
+    <h1>My <span class="gradient-text">Projects</span></h1>
+    <p style="color:var(--ink-3);margin-top:0.5rem;max-width:500px">
+      A curated showcase of web applications, mobile apps, and digital products I've built.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="projects-filter">
+      <button class="filter-btn <%= activeCategory === 'all' ? 'active' : '' %>" data-category="all">All Projects</button>
+      <button class="filter-btn <%= activeCategory === 'web' ? 'active' : '' %>" data-category="web">Web Apps</button>
+      <button class="filter-btn <%= activeCategory === 'ecommerce' ? 'active' : '' %>" data-category="ecommerce">E-Commerce</button>
+      <button class="filter-btn <%= activeCategory === 'mobile' ? 'active' : '' %>" data-category="mobile">Mobile</button>
+      <button class="filter-btn <%= activeCategory === 'design' ? 'active' : '' %>" data-category="design">Design</button>
+    </div>
+
+    <div class="projects-grid" id="projects-grid">
+      <% var catIcons = { web: '🌐', mobile: '📱', design: '🎨', ecommerce: '🛒', other: '⚡' }; %>
+      <% if(projects && projects.length > 0) { %>
+        <% projects.forEach(function(p, i) { %>
+        <div class="project-card reveal reveal-delay-<%= Math.min(i % 3, 5) %>" data-category="<%= p.category %>">
+          <div class="project-img-placeholder">
+            <% if(p.image) { %>
+              <img src="<%= p.image %>" alt="<%= p.title %>" style="width:100%; height:100%; object-fit:cover;">
+            <% } else { %>
+              <%= catIcons[p.category] || '⚡' %>
+            <% } %>
+            <div class="project-img-overlay">
+              <% if(p.liveUrl) { %>
+              <a href="<%= p.liveUrl %>" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+              <% } %>
+              <a href="/projects/<%= p._id %>" class="btn btn-sm btn-secondary">Details</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-category"><%= p.category %></div>
+            <h3 class="project-title"><%= p.title %></h3>
+            <p class="project-desc"><%= p.shortDesc %></p>
+            <div class="tech-tags" style="margin-bottom:0.8rem">
+              <% p.technologies.slice(0,4).forEach(function(t) { %>
+              <span class="tech-tag"><%= t %></span>
+              <% }); %>
+            </div>
+            <% if(p.featured) { %><span style="font-size:0.75rem;color:var(--accent2)">★ Featured</span><% } %>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+      <div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-4)">
+        <i class="fas fa-folder-open" style="font-size:3rem;display:block;margin-bottom:1rem;opacity:0.3"></i>
+        No projects found.
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--bg-alt);text-align:center">
+  <div class="container reveal">
+    <h2>Like What You See?</h2>
+    <p style="color:var(--ink-3);margin:1rem auto;max-width:400px">Let's create something amazing together.</p>
+    <a href="/contact" class="btn btn-primary btn-lg" style="margin-top:1rem">
+      <i class="fas fa-rocket"></i> Start Your Project
+    </a>
+  </div>
+</section>
+
+<%- include('partials/footer', { settings }) %>
+<script src="/js/main.js"></script>
+</body>
+</html>

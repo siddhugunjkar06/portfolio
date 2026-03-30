@@ -1,0 +1,102 @@
+<% var isEdit = project !== null; %>
+<%- include('head', { pageTitle: isEdit ? 'Edit Project' : 'New Project' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: isEdit ? 'Edit Project' : 'New Project', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <a href="/admin/projects" style="color:var(--text-muted);font-size:1.1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'"><i class="fas fa-arrow-left"></i></a>
+      <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem"><%= isEdit ? 'Edit Project' : 'New Project' %></h2>
+    </div>
+
+    <div class="admin-form-card">
+      <form method="POST" action="<%= isEdit ? '/admin/projects/'+project._id+'?_method=PUT' : '/admin/projects' %>" enctype="multipart/form-data">
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Project Title *</label>
+            <input type="text" name="title" class="admin-input" value="<%= isEdit ? project.title : '' %>" placeholder="e.g. NovaTrade Platform" required>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Category</label>
+            <select name="category" class="admin-input" style="cursor:pointer">
+              <% ['web','mobile','design','ecommerce','other'].forEach(function(c){ %>
+              <option value="<%= c %>" <%= isEdit && project.category === c ? 'selected' : '' %>><%= c.charAt(0).toUpperCase()+c.slice(1) %></option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Short Description *</label>
+          <input type="text" name="shortDesc" class="admin-input" value="<%= isEdit ? project.shortDesc : '' %>" placeholder="One-line summary shown on cards" required maxlength="100">
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Full Description *</label>
+          <textarea name="description" class="admin-input" rows="5" placeholder="Detailed project description..." required><%= isEdit ? project.description : '' %></textarea>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Technologies (comma-separated)</label>
+            <input type="text" name="technologies" class="admin-input" value="<%= isEdit ? project.technologies.join(', ') : '' %>" placeholder="React, Node.js, MongoDB">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Display Order</label>
+            <input type="number" name="order" class="admin-input" value="<%= isEdit ? project.order : 0 %>" min="0">
+          </div>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Live URL</label>
+            <input type="url" name="liveUrl" class="admin-input" value="<%= isEdit ? project.liveUrl : '' %>" placeholder="https://example.com">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">GitHub URL</label>
+            <input type="url" name="githubUrl" class="admin-input" value="<%= isEdit ? project.githubUrl : '' %>" placeholder="https://github.com/...">
+          </div>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Project Image</label>
+            <input type="file" name="image" class="admin-input" accept="image/*">
+            <% if(isEdit && project.image) { %>
+            <div style="margin-top:0.5rem"><img src="<%= project.image %>" style="max-width:120px;max-height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--border)"></div>
+            <% } %>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Status</label>
+            <select name="status" class="admin-input" style="cursor:pointer">
+              <option value="active" <%= isEdit && project.status === 'active' ? 'selected' : '' %>>Active</option>
+              <option value="draft" <%= isEdit && project.status === 'draft' ? 'selected' : '' %>>Draft</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <div class="switch-wrapper">
+            <label class="switch">
+              <input type="checkbox" name="featured" <%= isEdit && project.featured ? 'checked' : '' %>>
+              <span class="switch-slider"></span>
+            </label>
+            <span class="admin-label" style="margin-bottom:0">Featured Project (shown on homepage)</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> <%= isEdit ? 'Update Project' : 'Create Project' %>
+          </button>
+          <a href="/admin/projects" class="btn btn-ghost">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

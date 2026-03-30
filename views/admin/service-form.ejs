@@ -1,0 +1,70 @@
+<% var isEdit = service !== null; %>
+<%- include('head', { pageTitle: isEdit ? 'Edit Service' : 'New Service' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: isEdit ? 'Edit Service' : 'New Service', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <a href="/admin/services" style="color:var(--text-muted);font-size:1.1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'"><i class="fas fa-arrow-left"></i></a>
+      <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem"><%= isEdit ? 'Edit Service' : 'New Service' %></h2>
+    </div>
+
+    <div class="admin-form-card">
+      <form method="POST" action="<%= isEdit ? '/admin/services/'+service._id+'?_method=PUT' : '/admin/services' %>">
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Service Title *</label>
+            <input type="text" name="title" class="admin-input" value="<%= isEdit ? service.title : '' %>" placeholder="e.g. Web Development" required>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Icon (Emoji)</label>
+            <input type="text" name="icon" class="admin-input" value="<%= isEdit ? service.icon : '⚡' %>" placeholder="⚡" maxlength="4">
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Description *</label>
+          <textarea name="description" class="admin-input" rows="3" placeholder="Describe this service..." required maxlength="300"><%= isEdit ? service.description : '' %></textarea>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Features (one per line)</label>
+          <textarea name="features" class="admin-input" rows="6" placeholder="Custom React Apps&#10;REST APIs&#10;Database Design"><%= isEdit ? service.features.join('\n') : '' %></textarea>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Price / Starting From</label>
+            <input type="text" name="price" class="admin-input" value="<%= isEdit ? service.price : '' %>" placeholder="From $2,500">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Display Order</label>
+            <input type="number" name="order" class="admin-input" value="<%= isEdit ? service.order : 0 %>" min="0">
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <div class="switch-wrapper">
+            <label class="switch">
+              <input type="checkbox" name="featured" <%= isEdit && service.featured ? 'checked' : '' %>>
+              <span class="switch-slider"></span>
+            </label>
+            <span class="admin-label" style="margin-bottom:0">Featured Service</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> <%= isEdit ? 'Update Service' : 'Create Service' %>
+          </button>
+          <a href="/admin/services" class="btn btn-ghost">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

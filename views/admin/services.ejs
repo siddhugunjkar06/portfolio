@@ -1,0 +1,66 @@
+<%- include('head', { pageTitle: 'Services' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Services', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem;margin-bottom:0.2rem">Services</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted)"><%= services.length %> services</p>
+      </div>
+      <a href="/admin/services/new" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Service</a>
+    </div>
+
+    <div class="admin-card">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Service</th><th>Price</th><th>Features</th><th>Featured</th><th>Order</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <% if(services && services.length > 0) { %>
+            <% services.forEach(function(s) { %>
+            <%
+              var sTitle    = s.title       || 'Untitled';
+              var sDesc     = s.description || '';
+              var sIcon     = s.icon        || '⚡';
+              var sPrice    = s.price       || '—';
+              var sFeatures = Array.isArray(s.features) ? s.features : [];
+              var sFeatured = s.featured    || false;
+              var sOrder    = s.order       || 0;
+            %>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:0.75rem">
+                  <span style="font-size:1.8rem"><%= sIcon %></span>
+                  <div>
+                    <div class="primary"><%= sTitle %></div>
+                    <div style="font-size:0.78rem;color:var(--text-muted)"><%= sDesc.length > 50 ? sDesc.substring(0,50)+'...' : sDesc %></div>
+                  </div>
+                </div>
+              </td>
+              <td><%= sPrice %></td>
+              <td style="color:var(--text-muted)"><%= sFeatures.length %> items</td>
+              <td><%= sFeatured ? '<span style="color:#FFD700">★ Yes</span>' : '<span style="color:var(--text-muted)">No</span>' %></td>
+              <td><%= sOrder %></td>
+              <td>
+                <div class="action-btns">
+                  <a href="/admin/services/<%= s._id %>/edit" class="action-btn" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                  <form method="POST" action="/admin/services/<%= s._id %>?_method=DELETE" class="delete-form" style="display:inline">
+                    <button type="submit" class="action-btn danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">No services yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

@@ -1,0 +1,19 @@
+<header class="admin-topbar">
+  <div style="display:flex;align-items:center;gap:1rem">
+    <button class="sidebar-toggle" id="sidebarToggle" style="background:none;border:none;color:var(--text-primary);font-size:1.1rem;cursor:pointer;padding:4px">
+      <i class="fas fa-bars"></i>
+    </button>
+    <span class="topbar-title"><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Dashboard' %></span>
+  </div>
+  <div class="topbar-right">
+    <a href="/admin/contacts?status=unread" class="topbar-notification" title="Unread Messages">
+      <i class="fas fa-bell"></i>
+      <% if(typeof stats !== 'undefined' && stats.unreadContacts > 0) { %>
+        <span class="notification-dot"></span>
+      <% } %>
+    </a>
+    <a href="/" target="_blank" class="topbar-notification" title="View Site">
+      <i class="fas fa-globe"></i>
+    </a>
+  </div>
+</header>

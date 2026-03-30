@@ -1,0 +1,81 @@
+<%- include('head', { pageTitle: 'Projects' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Projects', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem;margin-bottom:0.2rem">Projects</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted)"><%= projects.length %> total projects</p>
+      </div>
+      <a href="/admin/projects/new" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Project</a>
+    </div>
+
+    <div class="admin-card">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Project</th><th>Category</th><th>Technologies</th><th>Status</th><th>Featured</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <% var catIcons = { web:'🌐', mobile:'📱', design:'🎨', ecommerce:'🛒', other:'⚡' }; %>
+          <% if(projects && projects.length > 0) { %>
+            <% projects.forEach(function(p) { %>
+            <%
+              var pTitle = p.title || 'Untitled';
+              var pDesc = p.shortDesc || '';
+              var pCat = p.category || 'web';
+              var pTechs = Array.isArray(p.technologies) ? p.technologies : [];
+              var pStatus = p.status || 'draft';
+              var pFeatured = p.featured || false;
+            %>
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:0.75rem">
+                  <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg-alt);flex-shrink:0">
+                    <% if(p.image) { %>
+                      <img src="<%= p.image %>" alt="<%= p.title %>" style="width:100%;height:100%;object-fit:cover">
+                    <% } else { %>
+                      <span style="font-size:1.2rem"><%= catIcons[pCat] || '⚡' %></span>
+                    <% } %>
+                  </div>
+                  <div>
+                    <div class="primary"><%= pTitle %></div>
+                    <div style="font-size:0.78rem;color:var(--text-muted)"><%= pDesc.length > 45 ? pDesc.substring(0,45)+'...' : pDesc %></div>
+                  </div>
+                </div>
+              </td>
+              <td style="text-transform:capitalize"><%= pCat %></td>
+              <td>
+                <div style="display:flex;flex-wrap:wrap;gap:0.3rem">
+                  <% pTechs.slice(0,3).forEach(function(t){ %><span class="tech-tag" style="font-size:0.7rem"><%= t %></span><% }); %>
+                  <% if(pTechs.length > 3) { %><span style="font-size:0.75rem;color:var(--text-muted)">+<%= pTechs.length-3 %></span><% } %>
+                </div>
+              </td>
+              <td><span class="status-badge status-<%= pStatus %>"><%= pStatus %></span></td>
+              <td><%= pFeatured ? '<span style="color:#FFD700">★ Yes</span>' : '<span style="color:var(--text-muted)">No</span>' %></td>
+              <td>
+                <div class="action-btns">
+                  <a href="/projects/<%= p._id %>" target="_blank" class="action-btn" title="View"><i class="fas fa-eye"></i></a>
+                  <a href="/admin/projects/<%= p._id %>/edit" class="action-btn" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                  <form method="POST" action="/admin/projects/<%= p._id %>?_method=DELETE" class="delete-form" style="display:inline">
+                    <button type="submit" class="action-btn danger" title="Delete"><i class="fas fa-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">
+              <i class="fas fa-folder-open" style="font-size:2rem;display:block;margin-bottom:0.5rem;opacity:0.3"></i>
+              No projects yet. <a href="/admin/projects/new" style="color:var(--accent)">Add your first project</a>
+            </td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

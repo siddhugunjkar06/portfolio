@@ -1,0 +1,59 @@
+<aside class="admin-sidebar" id="adminSidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">⚡ AdminPanel</div>
+    <div class="sidebar-subtitle">Portfolio Management</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <a href="/admin/dashboard" class="sidebar-link <%= page === 'dashboard' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-chart-line"></i></span> Dashboard
+      <% if(typeof stats !== 'undefined' && stats.unreadContacts > 0) { %>
+        <span class="badge"><%= stats.unreadContacts %></span>
+      <% } %>
+    </a>
+
+    <div class="nav-section-label">Content</div>
+    <a href="/admin/projects" class="sidebar-link <%= page === 'projects' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-folder-open"></i></span> Projects
+    </a>
+    <a href="/admin/services" class="sidebar-link <%= page === 'services' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-cogs"></i></span> Services
+    </a>
+    <a href="/admin/testimonials" class="sidebar-link <%= page === 'testimonials' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-star"></i></span> Testimonials
+    </a>
+    <a href="/admin/skills" class="sidebar-link <%= page === 'skills' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-code"></i></span> Skills
+    </a>
+    <a href="/admin/blog" class="sidebar-link <%= page === 'blog' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-pen-nib"></i></span> Blog Posts
+    </a>
+
+    <div class="nav-section-label">Communication</div>
+    <a href="/admin/contacts" class="sidebar-link <%= page === 'contacts' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-inbox"></i></span> Messages
+    </a>
+
+    <div class="nav-section-label">System</div>
+    <a href="/admin/settings" class="sidebar-link <%= page === 'settings' ? 'active' : '' %>">
+      <span class="icon"><i class="fas fa-sliders-h"></i></span> Settings
+    </a>
+    <a href="/" target="_blank" class="sidebar-link">
+      <span class="icon"><i class="fas fa-external-link-alt"></i></span> View Site
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-user">
+      <div class="admin-avatar"><%= (typeof adminName !== 'undefined' ? adminName : 'A').charAt(0).toUpperCase() %></div>
+      <div>
+        <div class="admin-name"><%= typeof adminName !== 'undefined' ? adminName : 'Admin' %></div>
+        <div class="admin-role">Administrator</div>
+      </div>
+    </div>
+    <a href="/admin/logout" class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Sign Out
+    </a>
+  </div>
+</aside>

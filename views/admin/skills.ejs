@@ -1,0 +1,90 @@
+<%- include('head', { pageTitle: 'Skills' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Skills & Technologies', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="margin-bottom:1.5rem">
+      <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem;margin-bottom:0.2rem">Skills &amp; Technologies</h2>
+      <p style="font-size:0.85rem;color:var(--text-muted)"><%= skills.length %> skills listed</p>
+    </div>
+
+    <div class="admin-grid-2">
+      <div class="admin-form-card" style="align-self:start">
+        <div class="admin-form-title"><i class="fas fa-plus" style="margin-right:8px;color:var(--accent)"></i>Add Skill</div>
+        <form method="POST" action="/admin/skills">
+          <div class="admin-form-group">
+            <label class="admin-label">Skill / Technology *</label>
+            <input type="text" name="name" class="admin-input" placeholder="e.g. React / Next.js" required>
+          </div>
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label class="admin-label">Proficiency (%)</label>
+              <input type="number" name="level" class="admin-input" value="80" min="0" max="100" required>
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-label">Category</label>
+              <select name="category" class="admin-input" style="cursor:pointer">
+                <% ['frontend','backend','devops','mobile','other'].forEach(function(c){ %>
+                <option value="<%= c %>"><%= c.charAt(0).toUpperCase()+c.slice(1) %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Display Order</label>
+            <input type="number" name="order" class="admin-input" value="<%= skills.length %>" min="0">
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Skill</button>
+        </form>
+      </div>
+
+      <div>
+        <%
+          var grouped = {};
+          skills.forEach(function(s){
+            var cat = s.category || 'other';
+            if(!grouped[cat]) grouped[cat] = [];
+            grouped[cat].push(s);
+          });
+          var cats = Object.keys(grouped);
+        %>
+        <% if(cats.length > 0) { %>
+          <% cats.forEach(function(cat){ %>
+          <div class="admin-card" style="margin-bottom:1rem">
+            <div class="admin-card-header">
+              <span class="admin-card-title" style="text-transform:capitalize"><%= cat %></span>
+              <span style="font-size:0.78rem;color:var(--text-muted)"><%= grouped[cat].length %> skills</span>
+            </div>
+            <% grouped[cat].forEach(function(s){ %>
+            <%
+              var sName  = s.name  || 'Unknown';
+              var sLevel = s.level || 0;
+            %>
+            <div style="padding:0.9rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:1rem">
+              <div style="flex:1">
+                <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                  <span style="font-size:0.88rem;font-weight:500"><%= sName %></span>
+                  <span style="font-size:0.82rem;color:var(--accent)"><%= sLevel %>%</span>
+                </div>
+                <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px">
+                  <div style="height:100%;width:<%= sLevel %>%;background:linear-gradient(90deg,#4F7CFF,#00E5A0);border-radius:2px"></div>
+                </div>
+              </div>
+              <form method="POST" action="/admin/skills/<%= s._id %>?_method=DELETE" class="delete-form">
+                <button type="submit" class="action-btn danger"><i class="fas fa-times"></i></button>
+              </form>
+            </div>
+            <% }); %>
+          </div>
+          <% }); %>
+        <% } else { %>
+          <div class="admin-card" style="padding:2rem;text-align:center;color:var(--text-muted)">No skills added yet.</div>
+        <% } %>
+      </div>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

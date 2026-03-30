@@ -1,0 +1,67 @@
+<% var isEdit = post !== null; %>
+<%- include('head', { pageTitle: isEdit ? 'Edit Post' : 'New Post' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: isEdit ? 'Edit Post' : 'New Blog Post', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <a href="/admin/blog" style="color:var(--text-muted);font-size:1.1rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'"><i class="fas fa-arrow-left"></i></a>
+      <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem"><%= isEdit ? 'Edit Post' : 'New Blog Post' %></h2>
+    </div>
+
+    <div class="admin-form-card">
+      <form method="POST" action="<%= isEdit ? '/admin/blog/'+post._id+'?_method=PUT' : '/admin/blog' %>" enctype="multipart/form-data">
+
+        <div class="admin-form-group">
+          <label class="admin-label">Post Title *</label>
+          <input type="text" name="title" class="admin-input" value="<%= isEdit ? post.title : '' %>" placeholder="e.g. Building Scalable Node.js APIs" required>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Excerpt / Summary *</label>
+          <textarea name="excerpt" class="admin-input" rows="2" placeholder="Brief summary shown in listings..." required maxlength="200"><%= isEdit ? post.excerpt : '' %></textarea>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Full Content *</label>
+          <textarea name="content" class="admin-input" rows="14" placeholder="Write your full article here (HTML supported)..." required><%= isEdit ? post.content : '' %></textarea>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-group">
+            <label class="admin-label">Tags (comma-separated)</label>
+            <input type="text" name="tags" class="admin-input" value="<%= isEdit ? post.tags.join(', ') : '' %>" placeholder="Node.js, API, Tutorial">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Status</label>
+            <select name="status" class="admin-input" style="cursor:pointer">
+              <option value="draft" <%= !isEdit || (isEdit && post.status === 'draft') ? 'selected' : '' %>>Draft</option>
+              <option value="published" <%= isEdit && post.status === 'published' ? 'selected' : '' %>>Published</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label">Featured Image</label>
+          <input type="file" name="image" class="admin-input" accept="image/*">
+          <% if(isEdit && post.image) { %>
+          <div style="margin-top:0.5rem">
+            <img src="<%= post.image %>" style="max-width:200px;max-height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+          </div>
+          <% } %>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> <%= isEdit ? 'Update Post' : 'Create Post' %>
+          </button>
+          <a href="/admin/blog" class="btn btn-ghost">Cancel</a>
+        </div>
+      </form>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

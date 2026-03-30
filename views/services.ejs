@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — <%= settings.siteName || 'DevPortfolio' %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<%- include('partials/navbar', { settings, page: 'services' }) %>
+
+<section class="page-header">
+  <div class="container">
+    <div class="section-eyebrow">Services</div>
+    <h1>What I <span class="gradient-text">Offer</span></h1>
+    <p style="color:var(--ink-3);margin-top:0.5rem;max-width:500px">
+      End-to-end digital solutions tailored to your business goals and budget.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="services-grid">
+      <% services.forEach(function(s, i) { %>
+      <div class="service-card reveal reveal-delay-<%= Math.min(i % 3, 5) %>">
+        <span class="service-icon"><%= s.icon %></span>
+        <h3 class="service-title"><%= s.title %></h3>
+        <p class="service-desc"><%= s.description %></p>
+        <ul class="service-features">
+          <% s.features.forEach(function(f) { %>
+          <li><%= f %></li>
+          <% }); %>
+        </ul>
+        <% if(s.price) { %>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem">
+          <span class="service-price"><%= s.price %></span>
+          <a href="/contact" class="btn btn-sm btn-secondary">Get Quote</a>
+        </div>
+        <% } %>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--bg-alt)">
+  <div class="container" style="max-width:800px;margin:0 auto">
+    <div class="section-header reveal" style="text-align:center">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-title">Common <span class="gradient-text">Questions</span></h2>
+    </div>
+    <% [
+      ['What is your typical timeline?', 'Project timelines vary based on complexity. Simple websites take 1-2 weeks, while complex web applications can take 4-12 weeks. I always provide detailed timelines during our initial consultation.'],
+      ['Do you work with startups?', 'Absolutely! I love working with startups and can work within budget constraints. I offer flexible payment structures and can help you prioritize features for your MVP.'],
+      ['What technologies do you specialize in?', 'I primarily work with React, Next.js, Node.js, MongoDB, and PostgreSQL. I choose the best stack for each project based on requirements.'],
+      ['Do you provide ongoing support?', 'Yes! I offer maintenance packages to keep your application running smoothly, apply security updates, and make improvements as your business grows.'],
+      ['How do you handle revisions?', 'My process includes multiple review stages with regular check-ins. Most projects include 2-3 rounds of revisions built into the timeline.']
+    ].forEach(function(faq) { %>
+    <div style="margin-bottom:1rem;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden" class="reveal">
+      <details>
+        <summary style="padding:1.2rem 1.5rem;cursor:pointer;font-weight:600;font-size:0.95rem;list-style:none;display:flex;justify-content:space-between;align-items:center">
+          <%= faq[0] %> <span style="color:var(--accent)">+</span>
+        </summary>
+        <div style="padding:0 1.5rem 1.2rem;color:var(--ink-3);font-size:0.9rem;line-height:1.7"><%= faq[1] %></div>
+      </details>
+    </div>
+    <% }); %>
+  </div>
+</section>
+
+<section class="section" style="text-align:center">
+  <div class="container reveal">
+    <h2>Ready to Get Started?</h2>
+    <p style="color:var(--ink-3);margin:1rem auto 2rem;max-width:400px">Let's find the perfect solution for your needs.</p>
+    <a href="/contact" class="btn btn-primary btn-lg">
+      <i class="fas fa-paper-plane"></i> Contact Me Today
+    </a>
+  </div>
+</section>
+
+<%- include('partials/footer', { settings }) %>
+<script src="/js/main.js"></script>
+</body>
+</html>

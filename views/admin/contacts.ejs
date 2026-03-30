@@ -1,0 +1,81 @@
+<%- include('head', { pageTitle: 'Messages' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Messages', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem;margin-bottom:0.2rem">Messages</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted)"><%= contacts.length %> messages</p>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <% ['all','unread','read','replied','archived'].forEach(function(s){ %>
+        <a href="/admin/contacts<%= s !== 'all' ? '?status='+s : '' %>"
+           class="btn btn-sm <%= activeStatus === s ? 'btn-primary' : 'btn-ghost' %>"
+           style="text-transform:capitalize"><%= s %></a>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <table class="admin-table">
+        <thead>
+          <tr><th>From</th><th>Subject &amp; Message</th><th>Budget</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <% if(contacts && contacts.length > 0) { %>
+            <% contacts.forEach(function(c) { %>
+            <%
+              var cName    = c.name    || 'Unknown';
+              var cEmail   = c.email   || '';
+              var cSubject = c.subject || '(no subject)';
+              var cMessage = c.message || '';
+              var cBudget  = c.budget  || '—';
+              var cStatus  = c.status  || 'unread';
+            %>
+            <tr>
+              <td>
+                <div class="primary"><%= cName %></div>
+                <div style="font-size:0.78rem;color:var(--text-muted)"><%= cEmail %></div>
+              </td>
+              <td style="max-width:260px">
+                <div style="font-size:0.88rem;font-weight:500;color:var(--text-primary)"><%= cSubject %></div>
+                <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><%= cMessage.substring(0,80) %>...</div>
+              </td>
+              <td style="font-size:0.85rem"><%= cBudget %></td>
+              <td><span class="status-badge status-<%= cStatus %>"><%= cStatus %></span></td>
+              <td style="font-size:0.8rem"><%= new Date(c.createdAt).toLocaleDateString() %></td>
+              <td>
+                <div class="action-btns">
+                  <a href="mailto:<%= cEmail %>?subject=Re: <%= encodeURIComponent(cSubject) %>" class="action-btn" title="Reply"><i class="fas fa-reply"></i></a>
+                  <form method="POST" action="/admin/contacts/<%= c._id %>/status?_method=PUT" style="display:inline">
+                    <select name="status" onchange="this.form.submit()"
+                      style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);border-radius:6px;padding:4px 6px;font-size:0.75rem;cursor:pointer;outline:none">
+                      <option value="unread"   <%= cStatus==='unread'   ? 'selected':'' %>>Unread</option>
+                      <option value="read"     <%= cStatus==='read'     ? 'selected':'' %>>Read</option>
+                      <option value="replied"  <%= cStatus==='replied'  ? 'selected':'' %>>Replied</option>
+                      <option value="archived" <%= cStatus==='archived' ? 'selected':'' %>>Archived</option>
+                    </select>
+                  </form>
+                  <form method="POST" action="/admin/contacts/<%= c._id %>?_method=DELETE" class="delete-form" style="display:inline">
+                    <button type="submit" class="action-btn danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">
+              <i class="fas fa-inbox" style="font-size:2rem;display:block;margin-bottom:0.5rem;opacity:0.3"></i>
+              No messages found.
+            </td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

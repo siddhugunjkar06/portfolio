@@ -1,0 +1,48 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><span><%= settings.siteName || 'DevPortfolio' %></span></div>
+        <p class="footer-desc"><%= settings.bio ? settings.bio.substring(0, 120) + '...' : 'Building digital experiences that drive business growth.' %></p>
+        <div class="social-links">
+          <% if(settings.github) { %><a href="<%= settings.github %>" target="_blank" class="social-link"><i class="fab fa-github"></i></a><% } %>
+          <% if(settings.linkedin) { %><a href="<%= settings.linkedin %>" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a><% } %>
+          <% if(settings.twitter) { %><a href="<%= settings.twitter %>" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a><% } %>
+          <a href="mailto:<%= settings.email || '' %>" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul class="footer-links">
+          <li><a href="/services">Web Development</a></li>
+          <li><a href="/services">E-Commerce</a></li>
+          <li><a href="/services">Mobile Apps</a></li>
+          <li><a href="/services">UI/UX Design</a></li>
+          <li><a href="/services">Consulting</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul class="footer-links">
+          <% if(settings.email) { %><li><a href="mailto:<%= settings.email %>"><i class="fas fa-envelope" style="margin-right:6px;color:var(--accent)"></i><%= settings.email %></a></li><% } %>
+          <% if(settings.phone) { %><li><a href="tel:<%= settings.phone %>"><i class="fas fa-phone" style="margin-right:6px;color:var(--accent)"></i><%= settings.phone %></a></li><% } %>
+          <li style="color:var(--ink-3);font-size:0.9rem"><i class="fas fa-map-pin" style="margin-right:6px;color:var(--accent)"></i><%= settings.location || 'San Francisco, CA' %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <%= new Date().getFullYear() %> <%= settings.siteName || 'DevPortfolio' %>. All rights reserved.</p>
+      <p style="color:var(--ink-4)">Built with ❤️ &amp; Node.js</p>
+    </div>
+  </div>
+</footer>

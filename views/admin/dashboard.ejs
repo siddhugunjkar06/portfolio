@@ -1,0 +1,89 @@
+<%- include('head', { pageTitle: 'Dashboard' }) %>
+<%- include('sidebar', { page, stats, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Dashboard', stats }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-folder-open" style="color:#4F7CFF"></i></div></div>
+        <div class="stat-card-number"><%= stats.projects || 0 %></div>
+        <div class="stat-card-label">Total Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-inbox" style="color:#00E5A0"></i></div></div>
+        <div class="stat-card-number"><%= stats.contacts || 0 %></div>
+        <div class="stat-card-label">Messages<% if(stats.unreadContacts > 0) { %> <span style="color:#00E5A0;font-size:0.75rem">(<%= stats.unreadContacts %> new)</span><% } %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-cogs" style="color:#FFD700"></i></div></div>
+        <div class="stat-card-number"><%= stats.services || 0 %></div>
+        <div class="stat-card-label">Services</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-header"><div class="stat-card-icon"><i class="fas fa-star" style="color:#FF6B9D"></i></div></div>
+        <div class="stat-card-number"><%= stats.testimonials || 0 %></div>
+        <div class="stat-card-label">Testimonials</div>
+      </div>
+    </div>
+
+    <div class="admin-grid-2">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <span class="admin-card-title"><i class="fas fa-inbox" style="margin-right:8px;color:#4F7CFF"></i>Recent Messages</span>
+          <a href="/admin/contacts" class="btn btn-sm btn-ghost">View All</a>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>From</th><th>Subject</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>
+            <% if(recentContacts && recentContacts.length > 0) { %>
+              <% recentContacts.forEach(function(c) { %>
+              <tr>
+                <td><div class="primary"><%= c.name %></div><div style="font-size:0.75rem;color:var(--text-muted)"><%= c.email %></div></td>
+                <td><%= c.subject.length > 35 ? c.subject.substring(0,35)+'...' : c.subject %></td>
+                <td><span class="status-badge status-<%= c.status %>"><%= c.status %></span></td>
+                <td style="font-size:0.8rem"><%= new Date(c.createdAt).toLocaleDateString() %></td>
+              </tr>
+              <% }); %>
+            <% } else { %>
+              <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem">No messages yet</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <div class="admin-card" style="margin-bottom:1.5rem">
+          <div class="admin-card-header">
+            <span class="admin-card-title"><i class="fas fa-bolt" style="margin-right:8px;color:#FFD700"></i>Quick Actions</span>
+          </div>
+          <div style="padding:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:0.8rem">
+            <a href="/admin/projects/new" class="btn btn-ghost" style="justify-content:center"><i class="fas fa-plus"></i> New Project</a>
+            <a href="/admin/services/new" class="btn btn-ghost" style="justify-content:center"><i class="fas fa-plus"></i> New Service</a>
+            <a href="/admin/blog/new" class="btn btn-ghost" style="justify-content:center"><i class="fas fa-pen"></i> New Post</a>
+            <a href="/admin/settings" class="btn btn-ghost" style="justify-content:center"><i class="fas fa-cog"></i> Settings</a>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title"><i class="fas fa-heartbeat" style="margin-right:8px;color:#00E5A0"></i>Site Status</span>
+          </div>
+          <div style="padding:1.2rem">
+            <% [['Portfolio Site',true],['Admin Panel',true],['Database',true],['Contact Form',true]].forEach(function(item){ %>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--border)">
+              <span style="font-size:0.88rem"><%= item[0] %></span>
+              <span style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:<%= item[1] ? '#00E5A0' : '#FF3B30' %>">
+                <span style="width:6px;height:6px;background:<%= item[1] ? '#00E5A0' : '#FF3B30' %>;border-radius:50%"></span>
+                <%= item[1] ? 'Operational' : 'Issue' %>
+              </span>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

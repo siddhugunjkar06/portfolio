@@ -1,0 +1,65 @@
+<%- include('head', { pageTitle: 'Blog Posts' }) %>
+<%- include('sidebar', { page, stats: {}, adminName }) %>
+<div class="admin-main">
+  <%- include('topbar', { pageTitle: 'Blog Posts', stats: {} }) %>
+  <main class="admin-content">
+    <%- include('alerts') %>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-size:1.4rem;margin-bottom:0.2rem">Blog Posts</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted)"><%= posts.length %> posts</p>
+      </div>
+      <a href="/admin/blog/new" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i> New Post</a>
+    </div>
+
+    <div class="admin-card">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Title</th><th>Tags</th><th>Status</th><th>Views</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <% if(posts && posts.length > 0) { %>
+            <% posts.forEach(function(p) { %>
+            <%
+              var pTitle   = p.title   || 'Untitled';
+              var pExcerpt = p.excerpt || '';
+              var pTags    = Array.isArray(p.tags) ? p.tags : [];
+              var pStatus  = p.status  || 'draft';
+              var pViews   = p.views   || 0;
+            %>
+            <tr>
+              <td>
+                <div class="primary"><%= pTitle %></div>
+                <div style="font-size:0.78rem;color:var(--text-muted)"><%= pExcerpt.length > 60 ? pExcerpt.substring(0,60)+'...' : pExcerpt %></div>
+              </td>
+              <td>
+                <div style="display:flex;flex-wrap:wrap;gap:0.3rem">
+                  <% pTags.slice(0,3).forEach(function(t){ %><span class="tech-tag" style="font-size:0.7rem"><%= t %></span><% }); %>
+                </div>
+              </td>
+              <td><span class="status-badge <%= pStatus === 'published' ? 'status-active' : 'status-draft' %>"><%= pStatus %></span></td>
+              <td style="font-size:0.85rem"><%= pViews %></td>
+              <td style="font-size:0.8rem"><%= new Date(p.createdAt).toLocaleDateString() %></td>
+              <td>
+                <div class="action-btns">
+                  <form method="POST" action="/admin/blog/<%= p._id %>?_method=DELETE" class="delete-form" style="display:inline">
+                    <button type="submit" class="action-btn danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)">
+              <i class="fas fa-pen-nib" style="font-size:2rem;display:block;margin-bottom:0.5rem;opacity:0.3"></i>
+              No posts yet. <a href="/admin/blog/new" style="color:var(--accent)">Write your first post</a>
+            </td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+<%- include('foot') %>

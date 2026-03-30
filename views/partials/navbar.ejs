@@ -1,0 +1,17 @@
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <span><%= settings.siteName ? settings.siteName.split(' ')[0] : 'Dev' %></span>
+      <span style="color:var(--ink-3)"><%= settings.siteName && settings.siteName.split(' ').length > 1 ? settings.siteName.split(' ').slice(1).join(' ') : 'Portfolio' %></span>
+      <span class="dot"></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" class="<%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>">Home</a></li>
+      <li><a href="/projects" class="<%= typeof page !== 'undefined' && page === 'projects' ? 'active' : '' %>">Projects</a></li>
+      <li><a href="/services" class="<%= typeof page !== 'undefined' && page === 'services' ? 'active' : '' %>">Services</a></li>
+      <li><a href="/blog" class="<%= typeof page !== 'undefined' && page === 'blog' ? 'active' : '' %>">Blog</a></li>
+      <li><a href="/contact" class="nav-cta <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">Let's Talk</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>

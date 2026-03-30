@@ -1,0 +1,16 @@
+</div><!-- /admin-layout -->
+<script src="/js/admin.js"></script>
+<script>
+  const toggle = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('adminSidebar');
+  if(toggle && sidebar) {
+    toggle.addEventListener('click', function(){ sidebar.classList.toggle('open'); });
+    document.addEventListener('click', function(e){
+      if(window.innerWidth <= 768 && !e.target.closest('.admin-sidebar') && !e.target.closest('#sidebarToggle')) {
+        sidebar.classList.remove('open');
+      }
+    });
+  }
+</script>
+</body>
+</html>
