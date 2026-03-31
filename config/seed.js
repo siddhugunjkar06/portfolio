@@ -25,7 +25,7 @@ module.exports = async function seedData() {
         { key: 'bio', value: 'Full-stack developer with 8+ years of experience building scalable web applications and digital products that drive business growth.' },
         { key: 'github', value: 'https://github.com' },
         { key: 'linkedin', value: 'https://linkedin.com' },
-        { key: 'twitter', value: 'https://twitter.com' },
+        { key: 'instagram', value: 'https://instagram.com' },
         { key: 'yearsExperience', value: '8' },
         { key: 'projectsCompleted', value: '120+' },
         { key: 'happyClients', value: '85+' },
@@ -108,7 +108,7 @@ module.exports = async function seedData() {
           description: 'End-to-end web application development using modern frameworks and best practices. From MVPs to enterprise-grade solutions.',
           icon: '⚡',
           features: ['Custom React/Vue/Next.js Apps', 'REST & GraphQL APIs', 'Database Architecture', 'Performance Optimization', 'Deployment & DevOps'],
-          price: 'From $2,500',
+          price: 'From ₹2,500',
           order: 1, featured: true
         },
         {
@@ -116,7 +116,7 @@ module.exports = async function seedData() {
           description: 'High-converting online stores with seamless payment integration, inventory management, and marketing tools.',
           icon: '🛒',
           features: ['Shopify & Custom Stores', 'Payment Gateway Integration', 'Inventory Management', 'SEO Optimization', 'Analytics Dashboard'],
-          price: 'From $3,500',
+          price: 'From ₹3,500',
           order: 2, featured: true
         },
         {
@@ -124,7 +124,7 @@ module.exports = async function seedData() {
           description: 'Cross-platform mobile apps for iOS and Android with native performance and beautiful UX.',
           icon: '📱',
           features: ['React Native Apps', 'iOS & Android', 'Push Notifications', 'Offline Support', 'App Store Deployment'],
-          price: 'From $4,000',
+          price: 'From ₹4,000',
           order: 3, featured: true
         },
         {
@@ -132,7 +132,7 @@ module.exports = async function seedData() {
           description: 'User-centered design that converts visitors into customers through thoughtful UX and stunning visuals.',
           icon: '🎨',
           features: ['User Research', 'Wireframing & Prototyping', 'Design Systems', 'Brand Identity', 'Usability Testing'],
-          price: 'From $1,500',
+          price: 'From ₹1,500',
           order: 4
         },
         {
@@ -140,7 +140,7 @@ module.exports = async function seedData() {
           description: 'Strategic technical guidance to help your business make the right technology decisions.',
           icon: '🧠',
           features: ['Architecture Review', 'Tech Stack Selection', 'Code Audits', 'Scalability Planning', 'Team Mentoring'],
-          price: '$150/hour',
+          price: '₹150/hour',
           order: 5
         },
         {
@@ -148,7 +148,7 @@ module.exports = async function seedData() {
           description: 'Ongoing support, updates, and optimization to keep your digital products running smoothly.',
           icon: '🔧',
           features: ['24/7 Monitoring', 'Bug Fixes', 'Security Updates', 'Performance Tuning', 'Monthly Reports'],
-          price: 'From $500/mo',
+          price: 'From ₹500/mo',
           order: 6
         }
       ]);

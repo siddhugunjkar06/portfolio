@@ -4,25 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="<%= settings.tagline || 'Professional Web Developer Portfolio' %>">
-  <meta name="keywords" content="web developer, full-stack developer, mobile development, UI/UX design, freelance developer">
-  <meta name="author" content="<%= settings.siteName || 'SG Developer' %>">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#000000">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  <title><%= settings.siteName || 'DevPortfolio' %> — Full-Stack Developer</title>
+  <title><%= settings.siteName || 'DevPortfolio' %> — Web Developer</title>
   <link rel="icon" type="image/png" href="<%= settings.favicon || '/logo.png' %>">
-  <link rel="canonical" href="https://sgdeveloper.onrender.com/">
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-  
-  <!-- Structured Data & Meta Tags -->
-  <%- include('partials/structured-data') %>
 </head>
 <body>
 
@@ -39,7 +27,7 @@
 <!-- Navigation -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <a href="/" class="nav-logo">
+    <a href="/admin/login" class="nav-logo">
       <span><%= settings.siteName ? settings.siteName.split(' ')[0] : 'Dev' %></span>
       <span style="color:var(--ink-3)"><%= settings.siteName && settings.siteName.split(' ').length > 1 ? settings.siteName.split(' ').slice(1).join(' ') : 'Portfolio' %></span>
       <span class="dot"></span>
@@ -86,16 +74,16 @@
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <h3><%= settings.yearsExperience || '8' %>+</h3>
-          <p>Years Exp.</p>
+          <h3></h3>
+          <p>Web Design</p>
         </div>
         <div class="hero-stat">
-          <h3><%= settings.projectsCompleted || '120+' %></h3>
-          <p>Projects</p>
+          <h3></h3>
+          <p>Development</p>
         </div>
         <div class="hero-stat">
-          <h3><%= settings.happyClients || '85+' %></h3>
-          <p>Clients</p>
+          <h3></h3>
+          <p>Maintenance</p>
         </div>
       </div>
     </div>
@@ -110,7 +98,7 @@
           <span style="margin-left:auto;font-size:0.75rem;color:var(--ink-4)">portfolio.js</span>
         </div>
         <div class="code-block">
-          <div><span class="cm">// Hello, World! 👋</span></div>
+          <div><span class="cm">// Hello, World!</span></div>
           <br>
           <div><span class="kw">const</span> <span class="fn">developer</span> = {</div>
           <div>&nbsp;&nbsp;<span class="obj">name</span>: <span class="str">"<%= settings.siteName || 'Alex Morgan' %>"</span>,</div>
@@ -162,7 +150,7 @@
     <div class="services-grid">
       <% services.forEach(function(s, i) { %>
       <div class="service-card reveal reveal-delay-<%= Math.min(i, 5) %>">
-        <span class="service-icon"><%= s.icon %></span>
+        <!-- <span class="service-icon"><%= s.icon %></span> -->
         <h3 class="service-title"><%= s.title %></h3>
         <p class="service-desc"><%= s.description %></p>
         <ul class="service-features">
@@ -170,7 +158,10 @@
           <li><%= f %></li>
           <% }); %>
         </ul>
-        <% if(s.price) { %><span class="service-price"><%= s.price %></span><% } %>
+       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem">
+          <span class="service-price"><%= s.price %></span>
+          <a href="/contact" class="btn btn-sm btn-secondary">Get Quote</a>
+        </div>
       </div>
       <% }); %>
     </div>
@@ -254,23 +245,23 @@
         <div style="background:white;border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.5rem;position:sticky;top:90px">
           <h3 style="margin-bottom:1.5rem">Why Work With Me?</h3>
           <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
-            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">⚡</div>
+            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fa-solid fa-truck-fast"></i></div>
             <div><div style="font-weight:600;font-size:0.9rem;margin-bottom:0.2rem">Fast Delivery</div><div style="font-size:0.82rem;color:var(--ink-3)">Projects delivered on time, every time.</div></div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
-            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🔒</div>
+            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fa-solid fa-user-lock"></i></div>
             <div><div style="font-weight:600;font-size:0.9rem;margin-bottom:0.2rem">Secure Code</div><div style="font-size:0.82rem;color:var(--ink-3)">Security-first development practices.</div></div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
-            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📱</div>
+            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fa-solid fa-mobile-screen"></i></div>
             <div><div style="font-weight:600;font-size:0.9rem;margin-bottom:0.2rem">Mobile-First</div><div style="font-size:0.82rem;color:var(--ink-3)">Responsive on all screen sizes.</div></div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border)">
-            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🎯</div>
+            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fa-solid fa-square-poll-vertical"></i></div>
             <div><div style="font-weight:600;font-size:0.9rem;margin-bottom:0.2rem">Results Driven</div><div style="font-size:0.82rem;color:var(--ink-3)">Focused on measurable business outcomes.</div></div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:1rem">
-            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">💬</div>
+            <div style="width:38px;height:38px;background:rgba(79,124,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0"><i class="fa-solid fa-headset"></i></div>
             <div><div style="font-weight:600;font-size:0.9rem;margin-bottom:0.2rem">Clear Communication</div><div style="font-size:0.82rem;color:var(--ink-3)">Regular updates throughout the project.</div></div>
           </div>
         </div>
@@ -381,8 +372,8 @@
         <div class="social-links">
           <% if(settings.github) { %><a href="<%= settings.github %>" target="_blank" class="social-link"><i class="fab fa-github"></i></a><% } %>
           <% if(settings.linkedin) { %><a href="<%= settings.linkedin %>" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a><% } %>
-          <% if(settings.twitter) { %><a href="<%= settings.twitter %>" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a><% } %>
-          <a href="mailto:<%= settings.email || '' %>" class="social-link"><i class="fas fa-envelope"></i></a>
+          <% if(settings.instagram) { %><a href="<%= settings.instagram %>" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a><% } %>
+          <a href="https://wa.me/<%= settings.phone %>" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
       </div>
       <div class="footer-col">

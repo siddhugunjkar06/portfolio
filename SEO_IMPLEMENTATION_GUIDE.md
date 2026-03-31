@@ -82,7 +82,7 @@ This guide documents all SEO improvements and structured data implementations ad
     "addressRegion": "MH",
     "addressCountry": "IN"
   },
-  "sameAs": ["github.com/...", "linkedin.com/...", "twitter.com/..."],
+  "sameAs": ["github.com/...", "linkedin.com/...", "instagram.com/..."],
   "areaServed": ["IN", "US", "GB", "CA", "AU"],
   "priceRange": "$$"
 }
@@ -328,7 +328,7 @@ All pages now have:
 - `og:url` - Canonical URL
 - `og:type` - Content type
 - `og:site_name` - Website name
-- `twitter:card` - Twitter-specific metadata
+- `instagram:card` - Instagram-specific metadata
 
 **Files with OG tags:**
 - routes/public.js (all route handlers)

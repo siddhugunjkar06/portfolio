@@ -11,7 +11,7 @@
 - [x] Theme color meta
 - [x] Canonical URLs
 - [x] OpenGraph tags (full set)
-- [x] Twitter card meta tags
+- [x] Instagram card meta tags
 
 ### 2. **JSON-LD Structured Data** ✅
 - [x] Organization/LocalBusiness Schema
@@ -192,7 +192,7 @@ portfolio/
 4. **Monitoring** - Set up Google Search Console alerts
 
 ### Marketing:
-1. **Social Sharing** - Share blog posts on LinkedIn, Twitter
+1. **Social Sharing** - Share blog posts on LinkedIn, Instagram
 2. **Backlinks** - Reach out to web directories
 3. **Local SEO** - Google Business Profile
 4. **Email** - Notify subscribers of new content
@@ -282,7 +282,7 @@ In your admin panel (Settings), ensure these are filled in:
 - [x] location/address
 - [x] github URL
 - [x] linkedin URL
-- [x] twitter URL
+- [x] instagram URL
 - [x] favicon
 - [x] years of experience
 - [x] number of projects

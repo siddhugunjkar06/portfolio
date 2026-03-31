@@ -25,9 +25,18 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  retryWrites: true,
+  w: 'majority',
+  maxPoolSize: 10,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  family: 4
+})
   .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+  .catch(err => console.log('❌ MongoDB Error:', err.message));
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -58,85 +67,20 @@ app.use((req, res, next) => {
   next();
 });
 
-// ─── SEO Middleware ──────────────────────────
-// Robots.txt
-app.get('/robots.txt', (req, res) => {
-  res.type('text/plain');
-  res.send(`User-agent: *
-Allow: /
-Allow: /projects
-Allow: /services
-Allow: /blog
-Allow: /faq
-Allow: /contact
-Disallow: /admin
-Disallow: /api
-Disallow: /uploads
-Sitemap: https://sgdeveloper.onrender.com/sitemap.xml`);
-});
-
-// Sitemap.xml
-app.get('/sitemap.xml', async (req, res) => {
-  const { Project, Blog } = require('./models');
-  const baseUrl = process.env.BASE_URL || 'https://sgdeveloper.onrender.com';
-  
-  try {
-    const [projects, blogs] = await Promise.all([
-      Project.find({ status: 'active' }),
-      Blog.find({ status: 'published' })
-    ]);
-
-    let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-    
-    // Static pages
-    const staticPages = ['/', '/projects', '/services', '/blog', '/faq', '/contact'];
-    staticPages.forEach(page => {
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}${page}</loc>\n`;
-      sitemap += `    <changefreq>${page === '/' ? 'weekly' : 'monthly'}</changefreq>\n`;
-      sitemap += `    <priority>${page === '/' ? '1.0' : '0.8'}</priority>\n`;
-      sitemap += `  </url>\n`;
-    });
-
-    // Dynamic project pages
-    projects.forEach(project => {
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/projects/${project._id}</loc>\n`;
-      sitemap += `    <lastmod>${project.updatedAt?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0]}</lastmod>\n`;
-      sitemap += `    <changefreq>monthly</changefreq>\n`;
-      sitemap += `    <priority>0.7</priority>\n`;
-      sitemap += `  </url>\n`;
-    });
-
-    // Dynamic blog pages
-    blogs.forEach(blog => {
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/blog/${blog._id}</loc>\n`;
-      sitemap += `    <lastmod>${blog.updatedAt?.toISOString().split('T')[0] || blog.createdAt?.toISOString().split('T')[0]}</lastmod>\n`;
-      sitemap += `    <changefreq>weekly</changefreq>\n`;
-      sitemap += `    <priority>0.6</priority>\n`;
-      sitemap += `  </url>\n`;
-    });
-
-    sitemap += '</urlset>';
-
-    res.type('application/xml');
-    res.send(sitemap);
-  } catch (err) {
-    console.error('Sitemap generation error:', err);
-    res.status(500).send('Error generating sitemap');
-  }
-});
-
 // Routes
 app.use('/', require('./routes/public'));
 app.use('/admin', require('./routes/admin'));
 app.use('/api', require('./routes/api'));
 
-// Seed initial data
-const seedData = require('./config/seed');
-seedData();
+// Seed initial data (non-blocking)
+setTimeout(async () => {
+  const seedData = require('./config/seed');
+  try {
+    await seedData();
+  } catch (error) {
+    console.log('⚠️  Seeding data skipped:', error.message);
+  }
+}, 2000);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

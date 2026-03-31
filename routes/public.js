@@ -70,9 +70,9 @@ router.get('/', async (req, res) => {
       'og:url': baseUrl + '/',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': settings.siteName || 'SG Developer',
-      'twitter:description': settings.tagline || 'Professional Full-Stack Developer',
-      'twitter:image': baseUrl + '/images/og-home.png'
+      'instagram:title': settings.siteName || 'SG Developer',
+      'instagram:description': settings.tagline || 'Professional Full-Stack Developer',
+      'instagram:image': baseUrl + '/images/og-home.png'
     };
 
     res.render('index', {
@@ -132,9 +132,9 @@ router.get('/projects', async (req, res) => {
       'og:url': baseUrl + '/projects',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': 'My Projects - ' + (settings.siteName || 'SG Developer'),
-      'twitter:description': 'Explore my portfolio of completed projects demonstrating technical expertise and creative solutions.',
-      'twitter:image': baseUrl + '/images/og-projects.png'
+      'instagram:title': 'My Projects - ' + (settings.siteName || 'SG Developer'),
+      'instagram:description': 'Explore my portfolio of completed projects demonstrating technical expertise and creative solutions.',
+      'instagram:image': baseUrl + '/images/og-projects.png'
     };
 
     res.render('projects', {
@@ -182,9 +182,9 @@ router.get('/projects/:id', async (req, res) => {
       'og:url': baseUrl + `/projects/${project._id}`,
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': project.title,
-      'twitter:description': project.description || 'Check out this project',
-      'twitter:image': project.image || baseUrl + '/images/og-project.png'
+      'instagram:title': project.title,
+      'instagram:description': project.description || 'Check out this project',
+      'instagram:image': project.image || baseUrl + '/images/og-project.png'
     };
 
     res.render('project-detail', {
@@ -235,9 +235,9 @@ router.get('/services', async (req, res) => {
       'og:url': baseUrl + '/services',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': 'Digital Services - ' + (settings.siteName || 'SG Developer'),
-      'twitter:description': 'Professional digital services including web development, mobile apps, e-commerce, UI/UX design, and consulting.',
-      'twitter:image': baseUrl + '/images/og-services.png'
+      'instagram:title': 'Digital Services - ' + (settings.siteName || 'SG Developer'),
+      'instagram:description': 'Professional digital services including web development, mobile apps, e-commerce, UI/UX design, and consulting.',
+      'instagram:image': baseUrl + '/images/og-services.png'
     };
 
     res.render('services', {
@@ -303,9 +303,9 @@ router.get('/blog', async (req, res) => {
       'og:url': baseUrl + '/blog',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': 'Blog - ' + (settings.siteName || 'SG Developer'),
-      'twitter:description': 'Read latest articles and insights about web development, technology, and digital solutions.',
-      'twitter:image': baseUrl + '/images/og-blog.png'
+      'instagram:title': 'Blog - ' + (settings.siteName || 'SG Developer'),
+      'instagram:description': 'Read latest articles and insights about web development, technology, and digital solutions.',
+      'instagram:image': baseUrl + '/images/og-blog.png'
     };
 
     res.render('blog', {
@@ -358,9 +358,9 @@ router.get('/contact', async (req, res) => {
       'og:url': baseUrl + '/contact',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': 'Contact - ' + (settings.siteName || 'SG Developer'),
-      'twitter:description': 'Get in touch with me to discuss your project or digital needs.',
-      'twitter:image': baseUrl + '/images/og-contact.png'
+      'instagram:title': 'Contact - ' + (settings.siteName || 'SG Developer'),
+      'instagram:description': 'Get in touch with me to discuss your project or digital needs.',
+      'instagram:image': baseUrl + '/images/og-contact.png'
     };
 
     res.render('contact', {
@@ -476,9 +476,9 @@ router.get('/faq', async (req, res) => {
       'og:url': baseUrl + '/faq',
       'og:type': 'website',
       'og:site_name': settings.siteName || 'SG Developer',
-      'twitter:title': 'FAQ - ' + (settings.siteName || 'SG Developer'),
-      'twitter:description': 'Frequently asked questions about services, pricing, and web development process.',
-      'twitter:image': baseUrl + '/images/og-faq.png'
+      'instagram:title': 'FAQ - ' + (settings.siteName || 'SG Developer'),
+      'instagram:description': 'Frequently asked questions about services, pricing, and web development process.',
+      'instagram:image': baseUrl + '/images/og-faq.png'
     };
 
     res.render('faq', {

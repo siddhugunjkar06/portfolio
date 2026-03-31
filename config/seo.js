@@ -28,7 +28,7 @@ function getOrganizationSchema(settings) {
     sameAs: [
       settings.github || 'https://github.com',
       settings.linkedin || 'https://linkedin.com',
-      settings.twitter || 'https://twitter.com'
+      settings.instagram || 'https://instagram.com'
     ],
     image: {
       '@type': 'ImageObject',
@@ -39,7 +39,7 @@ function getOrganizationSchema(settings) {
     areaServed: ['IN', 'US', 'GB', 'CA', 'AU'],
     award: ['Award Winner', 'Expert Developer'],
     knowsLanguage: ['en', 'hi'],
-    priceRange: '$$'
+    priceRange: '₹₹'
   };
 }
 
@@ -203,7 +203,7 @@ function getFAQSchema() {
         name: 'What is the pricing structure?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Pricing varies based on project scope. Web Development starts from $2,500, E-Commerce from $3,500, Mobile Dev from $4,000, UI/UX Design from $1,500, and Technical Consulting at $150/hour. Contact me for custom quotes on complex projects.'
+          text: 'Pricing varies based on project scope. Web Development starts from ₹2,500, E-Commerce from ₹3,500, Mobile Dev from ₹4,000, UI/UX Design from ₹1,500, and Technical Consulting at ₹150/hour. Contact me for custom quotes on complex projects.'
         }
       }
     ]
@@ -296,23 +296,23 @@ function getOpenGraphTags(pageTitle, pageDescription, imageUrl, pageUrl) {
     'og:image': imageUrl,
     'og:type': 'website',
     'og:site_name': 'SG Developer',
-    'twitter:card': 'summary_large_image',
-    'twitter:title': pageTitle,
-    'twitter:description': pageDescription,
-    'twitter:image': imageUrl
+    'instagram:card': 'summary_large_image',
+    'instagram:title': pageTitle,
+    'instagram:description': pageDescription,
+    'instagram:image': imageUrl
   };
 }
 
 /**
- * Generate Twitter Card Meta Tags
+ * Generate Instagram Card Meta Tags
  */
-function getTwitterCardTags(pageTitle, pageDescription, imageUrl) {
+function getInstagramCardTags(pageTitle, pageDescription, imageUrl) {
   return {
-    'twitter:card': 'summary_large_image',
-    'twitter:title': pageTitle,
-    'twitter:description': pageDescription,
-    'twitter:image': imageUrl,
-    'twitter:site': settings.twitter ? '@' + settings.twitter.split('/').pop() : '@sgdeveloper'
+    'instagram:card': 'summary_large_image',
+    'instagram:title': pageTitle,
+    'instagram:description': pageDescription,
+    'instagram:image': imageUrl,
+    'instagram:site': settings.instagram ? '@' + settings.instagram.split('/').pop() : '@sgdeveloper'
   };
 }
 
@@ -349,8 +349,8 @@ function generatePageMeta(pageTitle, pageDescription, imageUrl = null, canonical
       { property: 'og:image', content: imageUrl },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
-      { property: 'twitter:card', content: 'summary_large_image' },
-      { property: 'twitter:image', content: imageUrl }
+      { property: 'instagram:card', content: 'summary_large_image' },
+      { property: 'instagram:image', content: imageUrl }
     );
   }
 
@@ -412,5 +412,5 @@ module.exports = {
   getWebPageSchema,
   getWebsiteSchema,
   getOpenGraphTags,
-  getTwitterCardTags
+  getInstagramCardTags
 };
