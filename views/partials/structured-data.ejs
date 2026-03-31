@@ -1,0 +1,86 @@
+<!-- JSON-LD Structured Data -->
+<% if (typeof jsonLdSchemas !== 'undefined' && jsonLdSchemas && jsonLdSchemas.length > 0) { %>
+  <% jsonLdSchemas.forEach(schema => { %>
+    <script type="application/ld+json">
+      <%- JSON.stringify(schema, null, 2) %>
+    </script>
+  <% }); %>
+<% } %>
+
+<!-- Breadcrumb Navigation Structured Data -->
+<% if (typeof breadcrumbs !== 'undefined' && breadcrumbs && breadcrumbs.length > 0) { %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        <% breadcrumbs.forEach((item, index) => { %>
+          {
+            "@type": "ListItem",
+            "position": <%= index + 1 %>,
+            "name": "<%= item.name %>",
+            "item": "<%= item.url %>"
+          }<%= index < breadcrumbs.length - 1 ? ',' : '' %>
+        <% }); %>
+      ]
+    }
+  </script>
+<% } %>
+
+<!-- FAQ Schema (if on FAQ page) -->
+<% if (typeof isFaqPage !== 'undefined' && isFaqPage && typeof faqs !== 'undefined' && faqs) { %>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        <% faqs.forEach((faq, index) => { %>
+          {
+            "@type": "Question",
+            "name": "<%= faq.question.replace(/"/g, '\\"') %>",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "<%= faq.answer.replace(/"/g, '\\"') %>"
+            }
+          }<%= index < faqs.length - 1 ? ',' : '' %>
+        <% }); %>
+      ]
+    }
+  </script>
+<% } %>
+
+<!-- Product/Service Schema with Pricing -->
+<% if (typeof serviceSchemas !== 'undefined' && serviceSchemas && serviceSchemas.length > 0) { %>
+  <% serviceSchemas.forEach(schema => { %>
+    <script type="application/ld+json">
+      <%- JSON.stringify(schema, null, 2) %>
+    </script>
+  <% }); %>
+<% } %>
+
+<!-- Review/Rating Aggregate Schema -->
+<% if (typeof reviewSchema !== 'undefined' && reviewSchema) { %>
+  <script type="application/ld+json">
+    <%- JSON.stringify(reviewSchema, null, 2) %>
+  </script>
+<% } %>
+
+<!-- Open Graph Meta Tags (added to <head>) -->
+<% if (typeof ogTags !== 'undefined' && ogTags) { %>
+  <meta property="og:title" content="<%= ogTags['og:title'] %>">
+  <meta property="og:description" content="<%= ogTags['og:description'] %>">
+  <% if (ogTags['og:image']) { %>
+    <meta property="og:image" content="<%= ogTags['og:image'] %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+  <% } %>
+  <meta property="og:url" content="<%= ogTags['og:url'] %>">
+  <meta property="og:type" content="<%= ogTags['og:type'] || 'website' %>">
+  <meta property="og:site_name" content="<%= ogTags['og:site_name'] %>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= ogTags['twitter:title'] %>">
+  <meta name="twitter:description" content="<%= ogTags['twitter:description'] %>">
+  <% if (ogTags['twitter:image']) { %>
+    <meta name="twitter:image" content="<%= ogTags['twitter:image'] %>">
+  <% } %>
+<% } %>

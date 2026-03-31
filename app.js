@@ -58,6 +58,77 @@ app.use((req, res, next) => {
   next();
 });
 
+// ─── SEO Middleware ──────────────────────────
+// Robots.txt
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Allow: /
+Allow: /projects
+Allow: /services
+Allow: /blog
+Allow: /faq
+Allow: /contact
+Disallow: /admin
+Disallow: /api
+Disallow: /uploads
+Sitemap: https://sgdeveloper.onrender.com/sitemap.xml`);
+});
+
+// Sitemap.xml
+app.get('/sitemap.xml', async (req, res) => {
+  const { Project, Blog } = require('./models');
+  const baseUrl = process.env.BASE_URL || 'https://sgdeveloper.onrender.com';
+  
+  try {
+    const [projects, blogs] = await Promise.all([
+      Project.find({ status: 'active' }),
+      Blog.find({ status: 'published' })
+    ]);
+
+    let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+    
+    // Static pages
+    const staticPages = ['/', '/projects', '/services', '/blog', '/faq', '/contact'];
+    staticPages.forEach(page => {
+      sitemap += `  <url>\n`;
+      sitemap += `    <loc>${baseUrl}${page}</loc>\n`;
+      sitemap += `    <changefreq>${page === '/' ? 'weekly' : 'monthly'}</changefreq>\n`;
+      sitemap += `    <priority>${page === '/' ? '1.0' : '0.8'}</priority>\n`;
+      sitemap += `  </url>\n`;
+    });
+
+    // Dynamic project pages
+    projects.forEach(project => {
+      sitemap += `  <url>\n`;
+      sitemap += `    <loc>${baseUrl}/projects/${project._id}</loc>\n`;
+      sitemap += `    <lastmod>${project.updatedAt?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0]}</lastmod>\n`;
+      sitemap += `    <changefreq>monthly</changefreq>\n`;
+      sitemap += `    <priority>0.7</priority>\n`;
+      sitemap += `  </url>\n`;
+    });
+
+    // Dynamic blog pages
+    blogs.forEach(blog => {
+      sitemap += `  <url>\n`;
+      sitemap += `    <loc>${baseUrl}/blog/${blog._id}</loc>\n`;
+      sitemap += `    <lastmod>${blog.updatedAt?.toISOString().split('T')[0] || blog.createdAt?.toISOString().split('T')[0]}</lastmod>\n`;
+      sitemap += `    <changefreq>weekly</changefreq>\n`;
+      sitemap += `    <priority>0.6</priority>\n`;
+      sitemap += `  </url>\n`;
+    });
+
+    sitemap += '</urlset>';
+
+    res.type('application/xml');
+    res.send(sitemap);
+  } catch (err) {
+    console.error('Sitemap generation error:', err);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // Routes
 app.use('/', require('./routes/public'));
 app.use('/admin', require('./routes/admin'));

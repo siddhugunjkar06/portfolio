@@ -3,10 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — <%= settings.siteName || 'DevPortfolio' %></title>
+  <meta name="description" content="Get in touch with SG Developer for web development, mobile apps, UI/UX design, and digital consulting services.">
+  <meta name="keywords" content="contact, web developer, hire developer, digital services">
+  <meta name="author" content="<%= settings.siteName || 'SG Developer' %>">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#000000">
+  <title><%= typeof title !== 'undefined' ? title + ' — ' : '' %>Contact — <%= settings.siteName || 'DevPortfolio' %></title>
+  <link rel="canonical" href="https://sgdeveloper.onrender.com/contact">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  
+  <%- include('partials/structured-data') %>
 </head>
 <body>
 <div class="cursor-dot"></div>
